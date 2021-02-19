@@ -4,10 +4,34 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			rel="icon"
+			type="image/x-icon"
+			href="https://static.playoverwatch.com/img/favicon-696bc07714.ico"
+		/>
 		<script
 			src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js"
 			defer
 		></script>
+		<script>
+			const i18n = {
+				en: {
+					title: "Who is bothering you?",
+					pick: "then pick...",
+					dontPick: "and <strong>don't</strong> pick...",
+					modalTitle: hero =>
+						`<strong>${hero}</strong> is bothering you?`
+				},
+				es: {
+					title: "Quién te está jodiendo?",
+					pick: "entonces elegí...",
+					dontPick: "y <strong>no</strong> elijas...",
+					modalTitle: hero =>
+						`<strong>${hero}</strong> te está jodiendo?`
+				}
+			};
+			const lang = navigator.language.startsWith("es") ? "es" : "en";
+		</script>
 		<script>
 			const init = () =>
 				fetch("./data.json")
@@ -25,11 +49,11 @@
 					);
 		</script>
 		<link rel="stylesheet" href="./style.css" />
-		<title>Who is bothering you?</title>
+		<title>ANNOWYING</title>
 	</head>
 	<body>
-		<header>
-			<h1>Who is bothering you?</h1>
+		<header x-data>
+			<h1 x-text="i18n[lang].title"></h1>
 		</header>
 		<section
 			x-data="{heroes:[],selectedHero:{}}"
@@ -40,13 +64,11 @@
 					class="hero"
 					x-bind:style="`background-image: url(${hero.image})`"
 					x-bind:title="hero.name"
-					x-on:click="$refs.dialog.showModal();$refs.dialog.focus();selectedHero = hero"
+					x-on:click="$refs.dialog.showModal();selectedHero=hero"
 				></button>
 			</template>
 			<dialog x-ref="dialog">
-				<h1
-					x-html="`<strong>${selectedHero.name}</strong> is bothering you?`"
-				></h1>
+				<h1 x-html="i18n[lang].modalTitle(selectedHero.name)"></h1>
 				<button
 					class="close"
 					x-on:click="$refs.dialog.close();selectedHero={}"
@@ -55,7 +77,7 @@
 				</button>
 				<template x-if="selectedHero?.weak?.length">
 					<details open>
-						<summary>then pick...</summary>
+						<summary x-text="i18n[lang].pick"></summary>
 						<section class="weak">
 							<template
 								x-for="hero in selectedHero.weak"
@@ -70,12 +92,8 @@
 					</details>
 				</template>
 				<template x-if="selectedHero?.strong?.length">
-					<details>
-						<summary>
-							and
-							<strong>don't</strong>
-							pick...
-						</summary>
+					<details open>
+						<summary x-html="i18n[lang].dontPick"></summary>
 						<section class="strong">
 							<template
 								x-for="hero in selectedHero.strong"
