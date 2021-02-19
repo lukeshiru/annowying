@@ -1,0 +1,144 @@
+@font-face {
+	font-family: Big Noodle Too;
+	src: url(https://static.playoverwatch.com/fonts/big-noodle-too-254c7f1a1d.woff)
+		format("woff");
+	font-weight: 400;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: Big Noodle Too;
+	src: url(https://static.playoverwatch.com/fonts/big-noodle-too-oblique-1eed6dbdd0.woff)
+		format("woff");
+	font-weight: 400;
+	font-style: italic;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	min-height: 100vh;
+	background-color: #111;
+	font-family: "Big Noodle Too", impact, sans-serif;
+	font-weight: 400;
+}
+
+header {
+	text-align: center;
+	color: #fff;
+}
+
+header h1 {
+	font-size: 3rem;
+	text-transform: uppercase;
+	font-style: italic;
+}
+
+section {
+	display: flex;
+	width: 100vw;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+}
+
+.close {
+	background-color: transparent;
+	border: none;
+	color: inherit;
+	cursor: pointer;
+	font-size: 2rem;
+	height: 2.5rem;
+	line-height: 2rem;
+	vertical-align: middle;
+	position: absolute;
+	right: 1rem;
+	top: 1rem;
+	width: 2.5rem;
+	border-radius: 50%;
+}
+
+.hero {
+	background-color: transparent;
+	background-size: cover;
+	background-position: center;
+	border: none;
+	color: #fff;
+	cursor: pointer;
+	font-family: sans-serif;
+	font-size: 2vw;
+	font-weight: 900;
+	left: 0;
+	object-fit: cover;
+	padding-bottom: 16rem;
+	text-transform: uppercase;
+	width: 11.25rem;
+}
+
+dialog {
+	background-color: #111;
+	border-radius: 1rem;
+	border: 0;
+	color: #fff;
+	cursor: not-allowed;
+	width: 90vw;
+	max-width: 32rem;
+}
+
+dialog::backdrop {
+	background-color: rgba(0, 0, 0, 0.8);
+	backdrop-filter: blur(1.25rem);
+}
+
+dialog section {
+	width: auto;
+	justify-content: flex-start;
+}
+
+img {
+	width: 6rem;
+	height: 6rem;
+	object-fit: cover;
+	vertical-align: bottom;
+	margin: 0.25rem;
+	border-radius: 0.5rem;
+}
+
+h1,
+h2 {
+	font-weight: 300;
+}
+
+h1 {
+	font-size: 2rem;
+}
+
+h1 strong {
+	color: #f06414;
+}
+
+summary {
+	font-size: 2rem;
+}
+
+summary strong {
+	color: #f01414;
+}
+
+.weak img {
+	background: linear-gradient(#000, #14f0f0);
+}
+
+.strong img {
+	background: linear-gradient(#000, #f01414);
+}
+
+@media (max-width: 720px) {
+	.hero {
+		padding-bottom: 30%;
+		width: 25%;
+	}
+}

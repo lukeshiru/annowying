@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script
+			src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js"
+			defer
+		></script>
+		<script>
+			const init = () =>
+				fetch("./data.json")
+					.then(response => response.json())
+					.then(data =>
+						data.map(({ name, strong, ...rest }) => ({
+							...rest,
+							name,
+							strong: [...strong].sort(),
+							weak: data
+								.filter(({ strong }) => strong.includes(name))
+								.map(({ name }) => name)
+								.sort()
+						}))
+					);
+		</script>
+		<link rel="stylesheet" href="./style.css" />
+		<title>Who is bothering you?</title>
+	</head>
+	<body>
+		<header>
+			<h1>Who is bothering you?</h1>
+		</header>
+		<section
+			x-data="{heroes:[],selectedHero:{}}"
+			x-init="init().then(data=>heroes=data)"
+		>
+			<template x-for="hero in heroes" x-bind:key="hero">
+				<button
+					class="hero"
+					x-bind:style="`background-image: url(${hero.image})`"
+					x-bind:title="hero.name"
+					x-on:click="$refs.dialog.showModal();$refs.dialog.focus();selectedHero = hero"
+				></button>
+			</template>
+			<dialog x-ref="dialog">
+				<h1
+					x-html="`<strong>${selectedHero.name}</strong> is bothering you?`"
+				></h1>
+				<button
+					class="close"
+					x-on:click="$refs.dialog.close();selectedHero={}"
+				>
+					&times;
+				</button>
+				<template x-if="selectedHero?.weak?.length">
+					<details open>
+						<summary>then pick...</summary>
+						<section class="weak">
+							<template
+								x-for="hero in selectedHero.weak"
+								x-bind:key="hero"
+							>
+								<img
+									x-bind:src="heroes.find(({ name }) => name === hero).image"
+									x-bind:alt="hero"
+								/>
+							</template>
+						</section>
+					</details>
+				</template>
+				<template x-if="selectedHero?.strong?.length">
+					<details>
+						<summary>
+							and
+							<strong>don't</strong>
+							pick...
+						</summary>
+						<section class="strong">
+							<template
+								x-for="hero in selectedHero.strong"
+								x-bind:key="hero"
+							>
+								<img
+									x-bind:src="heroes.find(({ name }) => name === hero).image"
+									x-bind:alt="hero"
+								/>
+							</template>
+						</section>
+					</details>
+				</template>
+				<template
+					x-if="!selectedHero?.weak?.length && !selectedHero?.strong?.length"
+				>
+					<header>
+						<h1>🤷</h1>
+					</header>
+				</template>
+			</dialog>
+		</section>
+	</body>
+</html>
