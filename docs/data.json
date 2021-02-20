@@ -289,7 +289,23 @@
 	{
 		"name": "Sigma",
 		"image": "https://d1u1mce87gyfbn.cloudfront.net/hero/sigma/hero-select-portrait.png",
-		"strong": []
+		"strong": [
+			"Ana",
+			"Ashe",
+			"Bastion",
+			"Brigitte",
+			"D.Va",
+			"Hanzo",
+			"Lucio",
+			"McCree",
+			"Mercy",
+			"Orisa",
+			"Reinhardt",
+			"Roadhog",
+			"Soldier: 76",
+			"Torbjörn",
+			"Widowmaker"
+		]
 	},
 	{
 		"name": "Soldier: 76",
