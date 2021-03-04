@@ -6,15 +6,529 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link
 			rel="icon"
-			type="image/x-icon"
+			href="https://static.playoverwatch.com/img/logos/logo--overwatch-7d38f33606.svg"
+			sizes="any"
+			type="image/svg+xml"
+		/>
+		<link
+			rel="icon"
 			href="https://static.playoverwatch.com/img/favicon-696bc07714.ico"
 		/>
-		<script
-			src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js"
-			defer
-		></script>
-		<script>
-			const i18n = {
+		<link rel="manifest" href="./manifest.webmanifest" />
+		<script src="./load-sw.js" async defer></script>
+		<script type="module">
+			import "https://cdn.skypack.dev/alpinejs";
+
+			/**
+			 * Heroes data
+			 */
+			globalThis.heroes = [
+				{
+					name: "Ana",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/ana/hero-select-portrait.png",
+					strong: [
+						"Ashe",
+						"Baptiste",
+						"Bastion",
+						"Echo",
+						"Lucio",
+						"Moira",
+						"Pharah",
+						"Roadhog",
+						"Torbjörn",
+						"Wrecking Ball",
+						"Zenyatta"
+					]
+				},
+				{
+					name: "Ashe",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/ashe/hero-select-portrait.png",
+					strong: [
+						"Baptiste",
+						"Bastion",
+						"Echo",
+						"Mercy",
+						"Pharah",
+						"Reaper",
+						"Torbjörn"
+					]
+				},
+				{
+					name: "Baptiste",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/baptiste/hero-select-portrait.png",
+					strong: [
+						"D.Va",
+						"Echo",
+						"Junkrat",
+						"Moira",
+						"Sigma",
+						"Torbjörn",
+						"Zarya"
+					]
+				},
+				{
+					name: "Bastion",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/bastion/hero-select-portrait.png",
+					strong: [
+						"Baptiste",
+						"Echo",
+						"Reinhardt",
+						"Winston",
+						"Wrecking Ball",
+						"Zarya"
+					]
+				},
+				{
+					name: "Brigitte",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/brigitte/hero-select-portrait.png",
+					strong: ["D.Va", "Genji", "Tracer", "Wrecking Ball"]
+				},
+				{
+					name: "D.Va",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/dva/hero-select-portrait.png",
+					strong: [
+						"Ana",
+						"Ashe",
+						"Bastion",
+						"Echo",
+						"Hanzo",
+						"McCree",
+						"Mercy",
+						"Moira",
+						"Pharah",
+						"Sigma",
+						"Torbjörn",
+						"Widowmaker",
+						"Winston"
+					]
+				},
+				{
+					name: "Doomfist",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/doomfist/hero-select-portrait.png",
+					strong: [
+						"Ana",
+						"Ashe",
+						"Baptiste",
+						"D.Va",
+						"Genji",
+						"Reinhardt",
+						"Sigma",
+						"Zenyatta"
+					]
+				},
+				{
+					name: "Echo",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/echo/hero-select-portrait.png",
+					strong: [
+						"Brigitte",
+						"Doomfist",
+						"Genji",
+						"Junkrat",
+						"Lucio",
+						"Moira",
+						"Orisa",
+						"Pharah",
+						"Reaper",
+						"Reinhardt",
+						"Sigma",
+						"Symmetra",
+						"Torbjörn",
+						"Tracer",
+						"Winston",
+						"Wrecking Ball",
+						"Zarya"
+					]
+				},
+				{
+					name: "Genji",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/genji/hero-select-portrait.png",
+					strong: [
+						"Ana",
+						"Ashe",
+						"Bastion",
+						"Hanzo",
+						"Junkrat",
+						"Mercy",
+						"Orisa",
+						"Sigma",
+						"Torbjörn",
+						"Widowmaker",
+						"Zenyatta"
+					]
+				},
+				{
+					name: "Hanzo",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/hanzo/hero-select-portrait.png",
+					strong: [
+						"Ashe",
+						"Baptiste",
+						"Bastion",
+						"Echo",
+						"Orisa",
+						"Reaper",
+						"Sombra",
+						"Torbjörn"
+					]
+				},
+				{
+					name: "Junkrat",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/junkrat/hero-select-portrait.png",
+					strong: [
+						"Bastion",
+						"Brigitte",
+						"D.Va",
+						"Orisa",
+						"Reaper",
+						"Reinhardt",
+						"Sigma",
+						"Sombra",
+						"Torbjörn",
+						"Tracer"
+					]
+				},
+				{
+					name: "Lucio",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/lucio/hero-select-portrait.png",
+					strong: ["Mercy"]
+				},
+				{
+					name: "McCree",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/mccree/hero-select-portrait.png",
+					strong: [
+						"Doomfist",
+						"Echo",
+						"Lucio",
+						"Mercy",
+						"Moira",
+						"Pharah",
+						"Reaper",
+						"Sombra",
+						"Symmetra",
+						"Zenyatta"
+					]
+				},
+				{
+					name: "Mei",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/mei/hero-select-portrait.png",
+					strong: [
+						"Baptiste",
+						"D.Va",
+						"Echo",
+						"Genji",
+						"Mercy",
+						"Reinhardt",
+						"Roadhog",
+						"Sigma",
+						"Sombra",
+						"Wrecking Ball",
+						"Zenyatta"
+					]
+				},
+				{
+					name: "Mercy",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/mercy/hero-select-portrait.png",
+					strong: ["Echo"]
+				},
+				{
+					name: "Moira",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/moira/hero-select-portrait.png",
+					strong: ["Genji", "Orisa", "Reinhardt", "Sigma"]
+				},
+				{
+					name: "Orisa",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/orisa/hero-select-portrait.png",
+					strong: [
+						"Ashe",
+						"Baptiste",
+						"Doomfist",
+						"Mei",
+						"Soldier: 76",
+						"Torbjörn",
+						"Widowmaker"
+					]
+				},
+				{
+					name: "Pharah",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/pharah/hero-select-portrait.png",
+					strong: [
+						"Bastion",
+						"Brigitte",
+						"Doomfist",
+						"Genji",
+						"Junkrat",
+						"Lucio",
+						"Mei",
+						"Reaper",
+						"Reinhardt",
+						"Sigma",
+						"Symmetra",
+						"Torbjörn",
+						"Zarya"
+					]
+				},
+				{
+					name: "Reaper",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/reaper/hero-select-portrait.png",
+					strong: [
+						"Brigitte",
+						"D.Va",
+						"Doomfist",
+						"Mercy",
+						"Orisa",
+						"Reinhardt",
+						"Roadhog",
+						"Sigma",
+						"Sombra",
+						"Torbjörn",
+						"Winston",
+						"Wrecking Ball",
+						"Zarya",
+						"Zenyatta"
+					]
+				},
+				{
+					name: "Reinhardt",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/reinhardt/hero-select-portrait.png",
+					strong: ["Ashe", "Hanzo", "Soldier: 76", "Widowmaker"]
+				},
+				{
+					name: "Roadhog",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/roadhog/hero-select-portrait.png",
+					strong: [
+						"Baptiste",
+						"Bastion",
+						"D.Va",
+						"Genji",
+						"Lucio",
+						"McCree",
+						"Mercy",
+						"Sigma",
+						"Soldier: 76",
+						"Sombra",
+						"Torbjörn",
+						"Winston",
+						"Wrecking Ball"
+					]
+				},
+				{
+					name: "Sigma",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/sigma/hero-select-portrait.png",
+					strong: [
+						"Ana",
+						"Ashe",
+						"Bastion",
+						"Brigitte",
+						"D.Va",
+						"Hanzo",
+						"Lucio",
+						"McCree",
+						"Mercy",
+						"Orisa",
+						"Reinhardt",
+						"Roadhog",
+						"Soldier: 76",
+						"Torbjörn",
+						"Widowmaker"
+					]
+				},
+				{
+					name: "Soldier: 76",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/soldier-76/hero-select-portrait.png",
+					strong: [
+						"Baptiste",
+						"Bastion",
+						"Echo",
+						"Mercy",
+						"Pharah",
+						"Torbjörn"
+					]
+				},
+				{
+					name: "Sombra",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/sombra/hero-select-portrait.png",
+					strong: [
+						"Ashe",
+						"Baptiste",
+						"Brigitte",
+						"D.Va",
+						"Doomfist",
+						"Echo",
+						"Lucio",
+						"Mercy",
+						"Reinhardt",
+						"Sigma",
+						"Symmetra",
+						"Tracer",
+						"Wrecking Ball",
+						"Zenyatta"
+					]
+				},
+				{
+					name: "Symmetra",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/symmetra/hero-select-portrait.png",
+					strong: ["Orisa", "Reinhardt", "Sigma"]
+				},
+				{
+					name: "Torbjörn",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/torbjorn/hero-select-portrait.png",
+					strong: [
+						"Brigitte",
+						"Reinhardt",
+						"Tracer",
+						"Winston",
+						"Wrecking Ball"
+					]
+				},
+				{
+					name: "Tracer",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/tracer/hero-select-portrait.png",
+					strong: [
+						"Ana",
+						"Ashe",
+						"Bastion",
+						"Hanzo",
+						"Mercy",
+						"Orisa",
+						"Sigma",
+						"Zenyatta"
+					]
+				},
+				{
+					name: "Widowmaker",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/widowmaker/hero-select-portrait.png",
+					strong: [
+						"Ana",
+						"Ashe",
+						"Baptiste",
+						"Bastion",
+						"Brigitte",
+						"Echo",
+						"Hanzo",
+						"Junkrat",
+						"McCree",
+						"Mei",
+						"Mercy",
+						"Pharah",
+						"Reaper",
+						"Soldier: 76",
+						"Symmetra",
+						"Torbjörn",
+						"Zenyatta"
+					]
+				},
+				{
+					name: "Winston",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/winston/hero-select-portrait.png",
+					strong: [
+						"Ana",
+						"Ashe",
+						"Baptiste",
+						"Genji",
+						"Hanzo",
+						"Lucio",
+						"McCree",
+						"Mercy",
+						"Sigma",
+						"Sombra",
+						"Symmetra",
+						"Tracer",
+						"Widowmaker"
+					]
+				},
+				{
+					name: "Wrecking Ball",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/wrecking-ball/hero-select-portrait.png",
+					strong: ["Ashe", "Baptiste", "Sigma", "Widowmaker"]
+				},
+				{
+					name: "Zarya",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/zarya/hero-select-portrait.png",
+					strong: [
+						"D.Va",
+						"Genji",
+						"Junkrat",
+						"Mei",
+						"Roadhog",
+						"Sigma",
+						"Torbjörn"
+					]
+				},
+				{
+					name: "Zenyatta",
+					image:
+						"https://d1u1mce87gyfbn.cloudfront.net/hero/zenyatta/hero-select-portrait.png",
+					strong: [
+						"Bastion",
+						"D.Va",
+						"Echo",
+						"Pharah",
+						"Roadhog",
+						"Sigma",
+						"Zarya"
+					]
+				}
+			]
+				.map(({ name, strong, ...rest }, _, heroes) => ({
+					...rest,
+					name,
+					hash: name
+						.toLocaleLowerCase()
+						.normalize("NFD")
+						.replace(/[\u0300-\u036f]/g, "")
+						.replace(/ /, "")
+						.replace(/\:/, "-")
+						.replace(/\./, ""),
+					strong: [...strong].sort(),
+					weak: heroes
+						.filter(({ strong }) => strong.includes(name))
+						.map(({ name }) => name)
+						.sort()
+				}))
+				.map(({ strong, weak, ...rest }, _, heroes) => ({
+					...rest,
+					strong: strong.map(hero =>
+						heroes.find(({ name }) => name === hero)
+					),
+					weak: weak.map(hero =>
+						heroes.find(({ name }) => name === hero)
+					)
+				}));
+
+			/**
+			 * i18n strings.
+			 */
+			globalThis.i18n = {
 				en: {
 					title: "Who is bothering you?",
 					pick: "then pick...",
@@ -29,92 +543,84 @@
 					modalTitle: hero =>
 						`<strong>${hero}</strong> te está jodiendo?`
 				}
-			};
-			const lang = navigator.language.startsWith("es") ? "es" : "en";
-		</script>
-		<script>
-			const init = () =>
-				fetch("./data.json")
-					.then(response => response.json())
-					.then(data =>
-						data.map(({ name, strong, ...rest }) => ({
-							...rest,
-							name,
-							strong: [...strong].sort(),
-							weak: data
-								.filter(({ strong }) => strong.includes(name))
-								.map(({ name }) => name)
-								.sort()
-						}))
-					);
+			}[navigator.language.startsWith("es") ? "es" : "en"];
 		</script>
 		<link rel="stylesheet" href="./style.css" />
 		<title>ANNOWYING</title>
 	</head>
-	<body>
-		<header x-data>
-			<h1 x-text="i18n[lang].title"></h1>
+	<body x-data>
+		<header>
+			<h1 x-text="i18n.title"></h1>
 		</header>
-		<section
-			x-data="{heroes:[],selectedHero:{}}"
-			x-init="init().then(data=>heroes=data)"
-		>
+		<section>
 			<template x-for="hero in heroes" x-bind:key="hero">
-				<button
+				<a
 					class="hero"
-					x-bind:style="`background-image: url(${hero.image})`"
+					x-bind:href="`#${hero.hash}`"
 					x-bind:title="hero.name"
-					x-on:click="$refs.dialog.showModal();selectedHero=hero"
-				></button>
+				>
+					<img x-bind:src="hero.image" x-bind:alt="hero.name" />
+				</a>
 			</template>
-			<dialog x-ref="dialog">
-				<h1 x-html="i18n[lang].modalTitle(selectedHero.name)"></h1>
-				<button
-					class="close"
-					x-on:click="$refs.dialog.close();selectedHero={}"
-				>
-					&times;
-				</button>
-				<template x-if="selectedHero?.weak?.length">
-					<details open>
-						<summary x-text="i18n[lang].pick"></summary>
-						<section class="weak">
-							<template
-								x-for="hero in selectedHero.weak"
-								x-bind:key="hero"
-							>
-								<img
-									x-bind:src="heroes.find(({ name }) => name === hero).image"
-									x-bind:alt="hero"
-								/>
-							</template>
-						</section>
-					</details>
-				</template>
-				<template x-if="selectedHero?.strong?.length">
-					<details open>
-						<summary x-html="i18n[lang].dontPick"></summary>
-						<section class="strong">
-							<template
-								x-for="hero in selectedHero.strong"
-								x-bind:key="hero"
-							>
-								<img
-									x-bind:src="heroes.find(({ name }) => name === hero).image"
-									x-bind:alt="hero"
-								/>
-							</template>
-						</section>
-					</details>
-				</template>
-				<template
-					x-if="!selectedHero?.weak?.length && !selectedHero?.strong?.length"
-				>
-					<header>
-						<h1>🤷</h1>
-					</header>
-				</template>
-			</dialog>
+			<template x-for="hero in heroes" x-bind:key="hero">
+				<aside x-bind:id="hero.hash" x-on:click="location.hash=''">
+					<main x-on:click.stop>
+						<h1 x-html="i18n.modalTitle(hero.name)"></h1>
+						<button class="close" x-on:click="location.hash=''">
+							&times;
+						</button>
+						<template x-if="hero.weak.length">
+							<details open>
+								<summary x-text="i18n.pick"></summary>
+								<section class="weak">
+									<template
+										x-for="weak in hero.weak"
+										x-bind:key="weak"
+									>
+										<a
+											x-bind:href="`#${weak.hash}`"
+											x-bind:title="weak.name"
+										>
+											<img
+												x-bind:src="weak.image"
+												x-bind:alt="weak.name"
+											/>
+										</a>
+									</template>
+								</section>
+							</details>
+						</template>
+						<template x-if="hero.strong.length">
+							<details open>
+								<summary x-html="i18n.dontPick"></summary>
+								<section class="strong">
+									<template
+										x-for="strong in hero.strong"
+										x-bind:key="strong"
+									>
+										<a
+											x-bind:href="`#${strong.hash}`"
+											x-bind:title="strong.name"
+										>
+											<img
+												x-bind:src="strong.image"
+												x-bind:alt="strong.name"
+											/>
+										</a>
+									</template>
+								</section>
+							</details>
+						</template>
+						<template
+							x-if="!hero.weak.length && !hero.strong.length"
+						>
+							<header>
+								<h1>🤷 Uninstall</h1>
+							</header>
+						</template>
+					</main>
+				</aside>
+			</template>
 		</section>
 	</body>
 </html>

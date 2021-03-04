@@ -1,0 +1,22 @@
+{
+	"$schema": "https://json.schemastore.org/web-manifest.json",
+	"name": "ANNOWYING",
+	"short_name": "ANNOWYING",
+	"background_color": "#111",
+	"orientation": "any",
+	"display": "standalone",
+	"theme_color": "#f06414",
+	"start_url": "/",
+	"icons": [
+		{
+			"sizes": "512x512",
+			"src": "https://static.playoverwatch.com/img/logos/logo--overwatch-7d38f33606.svg",
+			"type": "image/svg+xml"
+		},
+		{
+			"sizes": "768x768",
+			"src": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Overwatch_circle_logo.svg/768px-Overwatch_circle_logo.svg.png",
+			"type": "image/png"
+		}
+	]
+}

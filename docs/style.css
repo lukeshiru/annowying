@@ -62,49 +62,61 @@ section {
 	border-radius: 50%;
 }
 
-.hero {
-	background-color: transparent;
-	background-size: cover;
-	background-position: center;
-	border: none;
-	color: #fff;
-	cursor: pointer;
-	font-family: sans-serif;
-	font-size: 2vw;
-	font-weight: 900;
+aside {
+	align-items: center;
+	backdrop-filter: blur(1.25rem);
+	background-color: rgba(0, 0, 0, 0.8);
+	display: none;
+	height: 100vh;
+	justify-content: center;
 	left: 0;
-	object-fit: cover;
-	padding-bottom: 16rem;
-	text-transform: uppercase;
-	width: 11.25rem;
+	position: fixed;
+	top: 0;
+	width: 100vw;
+	will-change: display;
 }
 
-dialog {
+aside:target {
+	display: flex;
+}
+
+aside main {
 	background-color: #111;
 	border-radius: 1rem;
 	border: 0;
 	color: #fff;
 	width: 90vw;
 	max-width: 32rem;
+	padding: 0 2rem 2rem;
+	max-height: 90vh;
+	overflow-y: auto;
 }
 
-dialog::backdrop {
-	background-color: rgba(0, 0, 0, 0.8);
-	backdrop-filter: blur(1.25rem);
-}
-
-dialog section {
+aside section {
 	width: auto;
 	justify-content: flex-start;
 }
 
-img {
-	width: 6rem;
-	height: 6rem;
-	object-fit: cover;
+a img {
+	background-color: #111;
+	background-image: linear-gradient(#111, transparent);
+	border: none;
+	color: #fff;
+	font-size: 2vw;
+	font-weight: 900;
+	left: 0;
+	transition: background-color 0.2s ease-in-out;
 	vertical-align: bottom;
-	margin: 0.25rem;
+	width: 11.25rem;
+	will-change: background-color;
+}
+
+aside a img {
 	border-radius: 0.5rem;
+	height: 6rem;
+	margin: 0.25rem;
+	object-fit: cover;
+	width: 6rem;
 }
 
 h1,
@@ -130,16 +142,23 @@ summary strong {
 }
 
 .weak img {
-	background: linear-gradient(#000, #14f0f0);
+	background-color: #14f0f0;
 }
 
 .strong img {
-	background: linear-gradient(#000, #f01414);
+	background-color: #f01414;
+}
+
+a:hover img,
+a:focus img {
+	background-color: #fff;
 }
 
 @media (max-width: 720px) {
 	.hero {
-		padding-bottom: 30%;
 		width: 25%;
+	}
+	.hero img {
+		width: 100%;
 	}
 }
