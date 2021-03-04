@@ -6,7 +6,7 @@
 	"orientation": "any",
 	"display": "standalone",
 	"theme_color": "#f06414",
-	"start_url": "/",
+	"start_url": "https://lukeshiru.github.io/annowying/",
 	"icons": [
 		{
 			"sizes": "512x512",
